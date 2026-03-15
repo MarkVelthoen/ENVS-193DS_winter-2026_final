@@ -41,7 +41,9 @@ kelp_clean <- kelp |>
   ungroup()
 ```
 
-b\)
+b\) The value for fronds in this quad and transect is -99999. This value represents an NA, which occurred if (1) data were not collected for a particular species or (2) a datasheet was lost.
+
+c\)
 
 ```{r}
 ggplot(data = kelp_clean,
@@ -56,4 +58,12 @@ ggplot(data = kelp_clean,
   
 ```
 
+d\) The site with the most variable mean kelp fronds per year is Isla Vista. We can tell that this is the case because the green line/points have the largest y-axis range. The site with the least variable mean kelp fronds per year is Carpinteria. We can tell that this is the case because the blue line/points has the smallest range on the y-axis, as well as a smaller number of spikes/dips.
+
 # Problem 3. Data Analysis
+
+a\) The 1s and 0s in this data set correspond to whether or not the nest is used. 1 corresponds to in use and 0 corresponds to out of use.
+
+b\) Visual obstruction: This is a continuous variable, however, it is separated into three sub-categories, visual obstruction directly at nest, visual obstruction 5 meters from the nest and visual obstruction 10 meters from the nest. As visual obstruction increases, the probability of Mountain Plover nest site use would decrease because the species prefers open habitats with direct lines of sight to predators. I found this in the discussion section, page 10 "reduced vegetation height and increased exposure of bare ground have been linked to enhanced Mountain Plover habitat quality."
+
+Distance to prairie dog colony edge: This is a continuous variable. As distance to prairie dog colony edge increases, the probability of Mountain Plover nest site use would decrease because plovers prefer nesting areas closer to colony edges rather than the cores of large colonies. I found this within the discussion section, page 10 "probability of site use declined near cores of large colonies.”
