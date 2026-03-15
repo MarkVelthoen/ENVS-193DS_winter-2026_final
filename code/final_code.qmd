@@ -1,0 +1,59 @@
+---
+title: "final_code"
+author: "Mark Velthoen"
+format: html
+editor: visual
+---
+
+<https://github.com/MarkVelthoen/ENVS-193DS_winter-2026_final>
+
+```{r}
+#| message: false
+library(tidyverse)
+library(here)
+library(janitor)
+library(readxl)
+kelp <- read.csv(here("data", "kelp_data.csv"))
+```
+
+# Problem 1. **Research Writing**
+
+# Problem 2. Data Visualization
+
+a\)
+
+```{r}
+#| message: false
+kelp_clean <- kelp |>
+  clean_names() |>
+  group_by(site, year) |>
+  filter(!(date == "2000-09-22" & transect == "6" & quad == "40")) |>
+  filter(site %in% c("IVEE", "NAPL", "CARP")) |>
+   mutate(site = case_when(
+  site == "NAPL" ~ "Naples",
+  site == "IVEE" ~ "Isla Vista",
+  site == "CARP" ~ "Carpinteria"
+)) |>
+  mutate(site = as_factor(site),
+       site = fct_relevel(site,
+                               "Naples", "Isla Vista", "Carpinteria")) |>
+  summarize(mean_fronds = mean(fronds)) |>
+  ungroup()
+```
+
+b\)
+
+```{r}
+ggplot(data = kelp_clean,
+       aes(x = year,
+           y = mean_fronds,
+           color = site)) + 
+  geom_line() + 
+  geom_point() + 
+  labs(x = "Year",
+       y = "Mean kelp fronds per year",
+       title = "Sites vary in mean kelp fronds per year")
+  
+```
+
+# Problem 3. Data Analysis
