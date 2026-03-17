@@ -2,6 +2,7 @@
 title: "final_code"
 author: "Mark Velthoen"
 format: html
+  toc: true
 editor: visual
 ---
 
@@ -31,27 +32,28 @@ a\)
 
 ```{r}
 #| message: false
-kelp_clean <- kelp |> #creating a new object kelp_clean
-  clean_names() |> #cleaning names
-  group_by(site, year) |>
-  filter(!(date == "2000-09-22" & transect == "6" & quad == "40")) |>
-  filter(site %in% c("IVEE", "NAPL", "CARP")) |>
+kelp_clean <- kelp |> # creating a new object kelp_clean
+  clean_names() |> # cleaning names
+  group_by(site, year) |> #grouping by site and year
+  filter(!(date == "2000-09-22" & transect == "6" & quad == "40")) |> # filtering out N/A result
+  filter(site %in% c("IVEE", "NAPL", "CARP")) |> # selecting specific sites
    mutate(site = case_when(
   site == "NAPL" ~ "Naples",
   site == "IVEE" ~ "Isla Vista",
   site == "CARP" ~ "Carpinteria"
-)) |>
+)) |> # changing the names of the sites to proper form
   mutate(site = as_factor(site),
        site = fct_relevel(site,
-                               "Naples", "Isla Vista", "Carpinteria")) |>
-  summarize(mean_fronds = mean(fronds)) |>
-  ungroup()
+                          "Naples", "Isla Vista", "Carpinteria")) |> # converts site name to a factor and creates a site order for plotting
 
-slice_sample(kelp_clean, n = 5)
+  summarize(mean_fronds = mean(fronds)) |> # creates mean fronds column
+  ungroup() # ungroups
+
+slice_sample(kelp_clean, n = 5) #displays 5 samples
 ```
 
 ```{r}
-
+str(kelp_clean) #displaying structure
 ```
 
 b\) The value for fronds in this quad and transect is -99999. This value represents an NA, which occurred if (1) data were not collected for a particular species or (2) a datasheet was lost.
@@ -75,9 +77,9 @@ d\) The site with the most variable mean kelp fronds per year is Isla Vista. We 
 
 # Problem 3. Data Analysis
 
-a\) The 1s and 0s in this data set correspond to whether or not the nest is used. 1 corresponds to in use and 0 corresponds to out of use.
+a\) The 1s and 0s in this data set correspond to whether or not a nest site is being used by a Mountain Plover. 1 corresponds to in use and 0 corresponds to out of use.
 
-b\) Visual obstruction: This is a continuous variable, however, it is separated into three sub-categories, visual obstruction directly at nest, visual obstruction 5 meters from the nest and visual obstruction 10 meters from the nest. As visual obstruction increases, the probability of Mountain Plover nest site use would decrease because the species prefers open habitats with direct lines of sight to predators. I found this in the discussion section, page 10 "reduced vegetation height and increased exposure of bare ground have been linked to enhanced Mountain Plover habitat quality."
+b\) Visual obstruction: This is a continuous variable, however, it is separated into three sub-categories, visual obstruction directly at nest, visual obstruction 5 meters from the nest and visual obstruction 10 meters from the nest. Visual obstruction measures the height at which vegetation is sufficiently dense to obscure a 2.5-cm wide pole when viewed from a 1-m height. As visual obstruction increases, the probability of Mountain Plover nest site use would decrease because the species prefers open habitats with direct lines of sight to predators. I found this in the discussion section, page 10 "reduced vegetation height and increased exposure of bare ground have been linked to enhanced Mountain Plover habitat quality."
 
 Distance to prairie dog colony edge: This is a continuous variable. As distance to prairie dog colony edge increases, the probability of Mountain Plover nest site use would decrease because plovers prefer nesting areas closer to colony edges rather than the cores of large colonies. I found this within the discussion section, page 10 "probability of site use declined near cores of large colonies.”
 
@@ -97,43 +99,50 @@ mopl_clean <- nest |>
 mod_null <- glm(used_bin ~ 1,
                 data = mopl_clean,
                 family = binomial)
-mod_null
 ```
 
 ```{r}
 mod_sat <- glm(used_bin ~ edgedist + vo_nest,
                data = mopl_clean,
                family = binomial)
-mod_sat
 ```
 
 ```{r}
 mod_edge <- glm(used_bin ~ edgedist,
                 data = mopl_clean,
                 family = binomial)
-mod_edge
 ```
 
 ```{r}
 mod_vo <- glm(used_bin ~ vo_nest,
               data = mopl_clean,
               family = binomial)
-mod_vo
 ```
 
-e\) The best model as determined by Akaike’s Information Criterion (AIC) was nest visual obstruction as a predictor of nest use.
+e\)
+
+```{r}
+# calculate the AIC for each model
+AIC(mod_sat,
+    mod_null,
+    mod_vo,
+    mod_edge) 
+```
+
+The best model as determined by Akaike’s Information Criterion (AIC) was nest visual obstruction as a predictor of nest use. AIC = 331.77
 
 f\)
 
 ```{r}
-plot(simulateResiduals(mod_vo))
+#| message: false
+plot(simulateResiduals(mod_vo)) #check diagnostic plot
 ```
 
 g\)
 
 ```{r}
 mod_preds <- ggpredict(mod_vo,
-                       terms = "vo_nest")
+                       terms = "vo_nest [all]")
 ggplot(mopl_clean,
        aes(x = vo_nest,
            y = used_bin)) + 
@@ -153,7 +162,7 @@ ggplot(mopl_clean,
                 color = "Model"),
             linewidth = 1) +
   labs(x = "Nest visual obstruction (cm)",  
-  y = "Probability of nest use") +
+  y = "Probability of nest occupancy") +
   scale_y_continuous(limits = c(0, 1),
                      breaks = c(0, 1)) + 
   scale_color_manual(values = c("Observed" = "grey67",
