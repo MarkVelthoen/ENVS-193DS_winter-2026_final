@@ -9,11 +9,18 @@ editor: visual
 
 ```{r}
 #| message: false
+# reading in packages
 library(tidyverse)
+library(RColorBrewer)
+library(ggeffects)
 library(here)
 library(janitor)
 library(readxl)
+library(DHARMa)
+
+# reading in data
 kelp <- read.csv(here("data", "kelp_data.csv"))
+nest <- read.csv(here("data", "nest_data.csv"))
 ```
 
 # Problem 1. **Research Writing**
@@ -24,8 +31,8 @@ a\)
 
 ```{r}
 #| message: false
-kelp_clean <- kelp |>
-  clean_names() |>
+kelp_clean <- kelp |> #creating a new object kelp_clean
+  clean_names() |> #cleaning names
   group_by(site, year) |>
   filter(!(date == "2000-09-22" & transect == "6" & quad == "40")) |>
   filter(site %in% c("IVEE", "NAPL", "CARP")) |>
@@ -39,6 +46,12 @@ kelp_clean <- kelp |>
                                "Naples", "Isla Vista", "Carpinteria")) |>
   summarize(mean_fronds = mean(fronds)) |>
   ungroup()
+
+slice_sample(kelp_clean, n = 5)
+```
+
+```{r}
+
 ```
 
 b\) The value for fronds in this quad and transect is -99999. This value represents an NA, which occurred if (1) data were not collected for a particular species or (2) a datasheet was lost.
@@ -67,3 +80,86 @@ a\) The 1s and 0s in this data set correspond to whether or not the nest is used
 b\) Visual obstruction: This is a continuous variable, however, it is separated into three sub-categories, visual obstruction directly at nest, visual obstruction 5 meters from the nest and visual obstruction 10 meters from the nest. As visual obstruction increases, the probability of Mountain Plover nest site use would decrease because the species prefers open habitats with direct lines of sight to predators. I found this in the discussion section, page 10 "reduced vegetation height and increased exposure of bare ground have been linked to enhanced Mountain Plover habitat quality."
 
 Distance to prairie dog colony edge: This is a continuous variable. As distance to prairie dog colony edge increases, the probability of Mountain Plover nest site use would decrease because plovers prefer nesting areas closer to colony edges rather than the cores of large colonies. I found this within the discussion section, page 10 "probability of site use declined near cores of large colonies.”
+
+c\.
+
+d\.
+
+```{r}
+mopl_clean <- nest |>
+  clean_names() |>
+  mutate(used_bin = ifelse(id == "used",1, 0)) |>
+  select(used_bin, edgedist, vo_nest)
+  
+```
+
+```{r}
+mod_null <- glm(used_bin ~ 1,
+                data = mopl_clean,
+                family = binomial)
+mod_null
+```
+
+```{r}
+mod_sat <- glm(used_bin ~ edgedist + vo_nest,
+               data = mopl_clean,
+               family = binomial)
+mod_sat
+```
+
+```{r}
+mod_edge <- glm(used_bin ~ edgedist,
+                data = mopl_clean,
+                family = binomial)
+mod_edge
+```
+
+```{r}
+mod_vo <- glm(used_bin ~ vo_nest,
+              data = mopl_clean,
+              family = binomial)
+mod_vo
+```
+
+e\) The best model as determined by Akaike’s Information Criterion (AIC) was nest visual obstruction as a predictor of nest use.
+
+f\)
+
+```{r}
+plot(simulateResiduals(mod_vo))
+```
+
+g\)
+
+```{r}
+mod_preds <- ggpredict(mod_vo,
+                       terms = "vo_nest")
+ggplot(mopl_clean,
+       aes(x = vo_nest,
+           y = used_bin)) + 
+  geom_point(aes(color = "Observed"),
+             size = 3,
+             alpha = 0.4) + 
+  geom_ribbon(data = mod_preds,
+              aes(x = x,
+                  y = predicted,
+                  ymin = conf.low,
+                  ymax = conf.high),
+              fill = "lightblue",
+              alpha = 0.4) + 
+  geom_line(data = mod_preds,
+            aes(x = x,
+                y = predicted,
+                color = "Model"),
+            linewidth = 1) +
+  labs(x = "Nest visual obstruction (cm)",  
+  y = "Probability of nest use") +
+  scale_y_continuous(limits = c(0, 1),
+                     breaks = c(0, 1)) + 
+  scale_color_manual(values = c("Observed" = "grey67",
+                                "Model" = "blue")) +
+theme(panel.grid = element_blank()) + 
+  theme_minimal()
+```
+
+h\)
