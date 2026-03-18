@@ -1,6 +1,7 @@
 ---
 title: "ENVS 193DS Final"
 author: "Mark Velthoen"
+date: "03/17/2026"
 format: html
 toc: true
 editor: visual
@@ -106,7 +107,7 @@ Distance to prairie dog colony edge: This is a continuous variable quantifies ho
 c\.
 
 | Model name | Visual obstruction | Distance to prairie dog colony | Model description |
-|----|:--:|:--:|:--:|
+|------------------|:----------------:|:----------------:|:----------------:|
 | mod_null |  |  | No predictors (null model) |
 | mod_sat | X | X | All predictors (full model) |
 | mod_edge |  | X | Distance to colony edge only |
