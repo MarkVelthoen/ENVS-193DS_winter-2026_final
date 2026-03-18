@@ -8,6 +8,8 @@ editor: visual
 
 <https://github.com/MarkVelthoen/ENVS-193DS_winter-2026_final>
 
+# Set Up
+
 ```{r}
 #| message: false
 # reading in packages
@@ -30,7 +32,11 @@ a\) In part 1, they used a simple linear regression. In part 2 they used a Krusk
 
 b\) One figure that could be used to accompany the statement is part 2 could be a jitter plot with the interquartile range and median point highlighted for each classification. The x-axis would be split into each water year classification and the y-axis would be the median flooded wetland area in m² for each year. Furthermore, the use of different colors for each classification could help differentiate the data.
 
-c\)
+c\) Flooded wetland area did not show a significant relationship with precipitation. (simple linear regression: F(df model, df residual) = test statistic, p = 0.11, α = significance level, adjusted R² = effect size).)
+
+Flooded wetland area did not differ significantly across water year classifications (wet, above normal, below normal, dry, and critical drought). ([Kruskal–Wallis test]{.underline}: H(df) = test statistic, p = 0.12, α = significance level).
+
+d\) I am taking a groundwater hydrology class, and groundwater is one of, if not the major source of water for many wetlands. Therefore, it is reasonable to assume that nearby groundwater pumping could influence the flooded area of a wetland, as the water table could be lowered. This variable is continuous, and could be labeled as; Total groundwater extraction (acre-feet per year) within a 1,000 ft radius
 
 # Problem 2. Data Visualization
 
