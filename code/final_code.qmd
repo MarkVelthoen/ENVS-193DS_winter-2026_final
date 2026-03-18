@@ -229,13 +229,57 @@ personal_clean <- my_data |> # creating a new object called personal_clean
 ```
 
 ```{r}
-personal_mod <- glm(ocean_bin ~ workload_hours,
-                    data = personal_clean,
-                    family = "binomial")
+personal_mod <- glm(ocean_bin ~ workload_hours, # creating a glm, ocean_bin as a function of workload
+                    data = personal_clean, # data
+                    family = "binomial") 
 ```
 
 ```{r}
 plot(
-  simulateResiduals(personal_mod)
+  simulateResiduals(personal_mod) # using DHARMa to plot residuals
 )
+```
+
+```{r}
+summary(personal_mod) # displaying analysis
+```
+
+```{r}
+exp(coef(personal_mod)) # displaying effect size
+```
+
+Logistic regression assumes independence of observations, binomial distribution, a linear relationship between transformed expected response in terms of link function and explanatory variables. Observations were assumed independent. However the DHARMa package indicated quantile deviations. This means that the model may not fully capture the relationship between workload and ocean use.
+
+d\)
+
+```{r}
+personal_pred <- ggpredict(personal_mod,
+                       terms = "workload_hours") # predicted probabilites
+
+ggplot(personal_clean, # using mopl_clean data frame
+       aes(x = workload_hours, # workload_hours as x-axis
+           y = ocean_bin)) + # ocean participation as y-axis
+  geom_point(aes(color = "Observed"), # coloring data points
+             size = 3, # setting the size and transparency 
+             alpha = 0.4)  + 
+  geom_ribbon(data = personal_pred, # using personal_pred for ribbon data
+              aes(x = x, # keeping the same x-axis
+                  y = predicted, 
+                  ymin = conf.low,
+                  ymax = conf.high),
+              fill = "lightblue", # coloring it light blue and setting transparaency
+              alpha = 0.4) + 
+  geom_line(data = personal_pred, # using personal_pred data for line
+            aes(x = x, # keeping the same x-axis
+                y = predicted,
+                color = "Model"), # coloring the line and setting width
+            linewidth = 1) +
+  labs(x = "Daily Workload (hours)",  # labeling the x and y axis
+  y = "Probability of Ocean Activity Participation") +
+  scale_y_continuous(limits = c(0, 1), # setting y-axis scale
+                     breaks = c(0, 1)) + 
+  scale_color_manual(values = c("Observed" = "grey67", # manually coiloring the line and data points
+                                "Model" = "blue")) +
+  theme_minimal() + # setting the theme
+theme(panel.grid = element_blank()) # removing gridlines
 ```
