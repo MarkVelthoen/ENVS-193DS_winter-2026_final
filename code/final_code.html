@@ -170,11 +170,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code># A tibble: 5 × 3
   site         year mean_fronds
   &lt;fct&gt;       &lt;int&gt;       &lt;dbl&gt;
-1 Naples       2011        5.32
-2 Carpinteria  2020        3.56
-3 Isla Vista   2019       12.1 
-4 Isla Vista   2023        3.78
-5 Isla Vista   2011        9.63</code></pre>
+1 Naples       2014        8.76
+2 Carpinteria  2012       16.6 
+3 Isla Vista   2020       25.0 
+4 Isla Vista   2004        5.46
+5 Naples       2017        4.74</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -221,6 +221,48 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>b) Visual obstruction: This is a continuous variable, however, it is separated into three sub-categories, visual obstruction directly at nest, visual obstruction 5 meters from the nest and visual obstruction 10 meters from the nest. Visual obstruction measures the height at which vegetation is sufficiently dense to obscure a 2.5-cm wide pole when viewed from a 1-m height. As visual obstruction increases, the probability of Mountain Plover nest site use would decrease because the species prefers open habitats with direct lines of sight to predators. I found this in the discussion section, page 10 “reduced vegetation height and increased exposure of bare ground have been linked to enhanced Mountain Plover habitat quality.”</p>
 <p>Distance to prairie dog colony edge: This is a continuous variable quantifies how far each measured nest is from the nearest edge of a prairie dog colony. As distance to colony edge increases, the probability of Mountain Plover nest site use would decrease. This is due to the fact that complementary resources, such as taller vegetation for thermoregulation and predator cover are more accessible. I found this within the discussion section, page 10 “probability of site use declined near cores of large colonies.”</p>
 <p>c.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 19%">
+<col style="width: 26%">
+<col style="width: 36%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Model name</th>
+<th style="text-align: center;">Visual obstruction</th>
+<th style="text-align: center;">Distance to prairie dog colony</th>
+<th style="text-align: center;">Model description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>mod_null</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">No predictors (null model)</td>
+</tr>
+<tr class="even">
+<td>mod_sat</td>
+<td style="text-align: center;">X</td>
+<td style="text-align: center;">X</td>
+<td style="text-align: center;">All predictors (full model)</td>
+</tr>
+<tr class="odd">
+<td>mod_edge</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">X</td>
+<td style="text-align: center;">Distance to colony edge only</td>
+</tr>
+<tr class="even">
+<td>mod_vo</td>
+<td style="text-align: center;">X</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">Visual obstruction only.</td>
+</tr>
+</tbody>
+</table>
 <p>d.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>mopl_clean <span class="ot">&lt;-</span> nest <span class="sc">|&gt;</span> <span class="co"># creating a new object called mopl_clean</span></span>
@@ -329,6 +371,11 @@ vo_nest | Predicted |     95% CI
 </section>
 <section id="problem-4.-affective-and-exploratory-visualizations" class="level1">
 <h1>Problem 4. Affective and Exploratory Visualizations</h1>
+<p>a) The affective visualization shows my personal data plotted on a landscape containing the ocean, a beach, and bluffs. The color and location of each point corresponds to my daily workload and a specific ocean activity, respectively. On the other hand, my exploratory visualizations are simply a bar graph separating ocean activity counts into categories of daily workload (low, medium and high) and a scatter plot showing the relationship between daily workload and whether or not I went in the ocean. The exploratory visualizations focus on clear communication, whereas the affective visualization displays the data in an emotional, creative and artistic way.</p>
+<p>I think the main similarity between my visualizations is the creation of a workload category and the use of colors to differentiate between each ocean activity and daily workload category.</p>
+<p>One of the most prominent patterns that appeared throughout all of my visualizations was the inverse relationship between daily workload and probability of going in the ocean. As daily workload increased, the probability that I was going to participate in an ocean activity decreased. This pattern was constant for each visualization, because as I spent more time on homework or in class, I was less likely to have time to go in the ocean.</p>
+<p>I did not attend week 9 workshop, however, at week 10 workshop, one of the pieces of advice that stuck with me was to space out my data points for each ocean activity location. This would definitely help fill in the painting’s empty space.</p>
+<p>b)</p>
 </section>
 
 </main>

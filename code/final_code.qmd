@@ -104,6 +104,13 @@ Distance to prairie dog colony edge: This is a continuous variable quantifies ho
 
 c\.
 
+| Model name | Visual obstruction | Distance to prairie dog colony | Model description |
+|------------|:------------:|:-----------------:|:------------------------:|
+| mod_null |  |  | No predictors (null model) |
+| mod_sat | X | X | All predictors (full model) |
+| mod_edge |  | X | Distance to colony edge only |
+| mod_vo | X |  | Visual obstruction only. |
+
 d\.
 
 ```{r}
@@ -200,3 +207,13 @@ ggpredict(mod_vo, # using visual obstruction model
 j\. We determined that the best model was visual obstruction as a predictor of nest occupancy. The predicted probability of nest occupancy at zero visual obstruction is 0.73 (95% CI: 0.65, 0.80), and as visual obstruction increases, the predicted probability of nest occupancy decreases. This inverse relationship is consistent with the biological preference of Mountain Plovers, as they tend to select sites with with direct lines of sight to predators. Furthermore, Mountain Plovers blend in well with bare soil when viewed from above by predators, further explaining the preference for low visual obstruction. As for distance to prairie dog colony, it makes sense that visual obstruction is directly correlated to distance, as prairie dogs maintain areas of short vegetation, due to burrowing.
 
 # Problem 4. Affective and Exploratory Visualizations
+
+a\) The affective visualization shows my personal data plotted on a landscape containing the ocean, a beach, and bluffs. The color and location of each point corresponds to my daily workload and a specific ocean activity, respectively. On the other hand, my exploratory visualizations are simply a bar graph separating ocean activity counts into categories of daily workload (low, medium and high) and a scatter plot showing the relationship between daily workload and whether or not I went in the ocean. The exploratory visualizations focus on clear communication, whereas the affective visualization displays the data in an emotional, creative and artistic way.
+
+I think the main similarity between my visualizations is the creation of a workload category and the use of colors to differentiate between each ocean activity and daily workload category.
+
+One of the most prominent patterns that appeared throughout all of my visualizations was the inverse relationship between daily workload and probability of going in the ocean. As daily workload increased, the probability that I was going to participate in an ocean activity decreased. This pattern was constant for each visualization, because as I spent more time on homework or in class, I was less likely to have time to go in the ocean.
+
+I did not attend week 9 workshop, however, at week 10 workshop, one of the pieces of advice that stuck with me was to space out my data points for each ocean activity location. This would definitely help fill in the painting's empty space.
+
+b\)
