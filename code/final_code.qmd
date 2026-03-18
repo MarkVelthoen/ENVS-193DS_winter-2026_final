@@ -245,6 +245,11 @@ summary(personal_mod) # displaying analysis
 ```
 
 ```{r}
+gtsummary::tbl_regression(personal_mod,
+                          exponentiate = TRUE) # displaying analysis in a table
+```
+
+```{r}
 exp(coef(personal_mod)) # displaying effect size
 ```
 
@@ -286,4 +291,6 @@ theme(panel.grid = element_blank()) # removing gridlines
 
 e\) Figure d: Probability of ocean activity participation decreases as daily workload (hours) increases. The predicted probability of me going in the ocean (y-axis) is shown as the response of my daily workload (x-axis), based on a logistic regression model. The dark blue line shows the predicted probability of ocean activity participation and the shaded area around it represents the 95% confidence interval. The grey, transparent points at the top and bottom of the graph represent the observed data of ocean activity participation, with a one corresponding to getting in the ocean and a zero corresponding to not getting in the ocean.
 
-f\)
+f\) I was significantly less likely to enter the ocean as daily workload increased, because as I spent more time on homework or in class, I was less likely to have time to go in the ocean. With every one hour increase in workload, the odds of entering the ocean decreased by a factor of 0.65 (95% CI: \[0.48, 0.83\], p = 0.0017, ⍺ = 0.05). At higher workload levels, the predicted probability of entering the ocean was low, whereas at lower workload levels, the probability was substantially higher. The effect size, which is the same as the odds ratio (0.65) allows us to quantify the magnitude of the relationship, or how strongly daily workload influences ocean participation.
+
+g\) Shared my visualization in class!
