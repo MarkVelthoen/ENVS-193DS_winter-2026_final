@@ -24,6 +24,7 @@ library(DHARMa)
 # reading in data
 kelp <- read.csv(here("data", "kelp_data.csv"))
 nest <- read.csv(here("data", "nest_data.csv"))
+my_data <- read.csv(here("data", "personal_data.csv"))
 ```
 
 # Problem 1. **Research Writing**
@@ -216,4 +217,25 @@ One of the most prominent patterns that appeared throughout all of my visualizat
 
 I did not attend week 9 workshop, however, at week 10 workshop, one of the pieces of advice that stuck with me was to space out my data points for each ocean activity location. This would definitely help fill in the painting's empty space.
 
-b\)
+b\) To examine whether daily workload (hours per day) predicts whether or not I went in the ocean (binomial, yes ocean/no ocean), I would use logistic regression. A generalized linear model (GLM) is appropriate because the response variable is binomial, and the predictor variable (hours worked per day) is continuous. This analysis allows us to model how changes in workload influence the probability of participating in an ocean activity.
+
+c\)
+
+```{r}
+personal_clean <- my_data |> # creating a new object called personal_clean
+  clean_names() |> # cleaning the names
+  mutate(ocean_bin = ifelse(ocean == "Yes", 1, 0)) |> # making a new column that displays 1 if ocean is in yes and 0 if not
+  select(ocean_bin, workload_hours) #selecting only binary response and predictor
+```
+
+```{r}
+personal_mod <- glm(ocean_bin ~ workload_hours,
+                    data = personal_clean,
+                    family = "binomial")
+```
+
+```{r}
+plot(
+  simulateResiduals(personal_mod)
+)
+```
