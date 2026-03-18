@@ -171,11 +171,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code># A tibble: 5 × 3
   site         year mean_fronds
   &lt;fct&gt;       &lt;int&gt;       &lt;dbl&gt;
-1 Carpinteria  2001        4.42
-2 Isla Vista   2011        9.63
-3 Carpinteria  2016        4.97
-4 Naples       2024       17.5 
-5 Naples       2010        5.27</code></pre>
+1 Carpinteria  2018        4.21
+2 Carpinteria  2003        5.27
+3 Naples       2017        4.74
+4 Isla Vista   2025       27.5 
+5 Isla Vista   2020       25.0 </code></pre>
 </div>
 </div>
 <div class="cell">
@@ -226,8 +226,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <colgroup>
 <col style="width: 16%">
 <col style="width: 19%">
-<col style="width: 26%">
-<col style="width: 36%">
+<col style="width: 24%">
+<col style="width: 40%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -346,7 +346,7 @@ mod_edge  2 386.0911</code></pre>
 <span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Observed"</span> <span class="ot">=</span> <span class="st">"grey67"</span>, <span class="co"># manually coiloring the line and data points</span></span>
 <span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"Model"</span> <span class="ot">=</span> <span class="st">"blue"</span>)) <span class="sc">+</span></span>
 <span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="co"># setting the theme</span></span>
-<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a><span class="fu">theme</span>(<span class="at">panel.grid =</span> <span class="fu">element_blank</span>()) <span class="co"># removing gridlines</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a><span class="fu">theme</span>(<span class="at">panel.grid =</span> <span class="fu">element_blank</span>())  <span class="co"># removing gridlines</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -472,6 +472,8 @@ Number of Fisher Scoring iterations: 4</code></pre>
 </div>
 </div>
 </div>
+<p>e) Figure d: Probability of ocean activity participation decreases as daily workload (hours) increases. The predicted probability of me going in the ocean (y-axis) is shown as the response of my daily workload (x-axis), based on a logistic regression model. The dark blue line shows the predicted probability of ocean activity participation and the shaded area around it represents the 95% confidence interval. The grey, transparent points at the top and bottom of the graph represent the observed data of ocean activity participation, with a one corresponding to getting in the ocean and a zero corresponding to not getting in the ocean.</p>
+<p>f)</p>
 </section>
 
 </main>
