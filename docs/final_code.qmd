@@ -106,7 +106,7 @@ Distance to prairie dog colony edge: This is a continuous variable quantifies ho
 c\.
 
 | Model name | Visual obstruction | Distance to prairie dog colony | Model description |
-|--------------|:---------------:|:-------------------:|:---------------------------------:|
+|----|:--:|:--:|:--:|
 | mod_null |  |  | No predictors (null model) |
 | mod_sat | X | X | All predictors (full model) |
 | mod_edge |  | X | Distance to colony edge only |
