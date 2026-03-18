@@ -2,7 +2,7 @@
 title: "final_code"
 author: "Mark Velthoen"
 format: html
-  toc: true
+toc: true
 editor: visual
 ---
 
@@ -25,6 +25,8 @@ nest <- read.csv(here("data", "nest_data.csv"))
 ```
 
 # Problem 1. **Research Writing**
+
+a\)
 
 # Problem 2. Data Visualization
 
@@ -92,7 +94,6 @@ mopl_clean <- nest |>
   clean_names() |>
   mutate(used_bin = ifelse(id == "used",1, 0)) |>
   select(used_bin, edgedist, vo_nest)
-  
 ```
 
 ```{r}
@@ -122,11 +123,10 @@ mod_vo <- glm(used_bin ~ vo_nest,
 e\)
 
 ```{r}
-# calculate the AIC for each model
 AIC(mod_sat,
     mod_null,
     mod_vo,
-    mod_edge) 
+    mod_edge) # calculate the AIC for each model
 ```
 
 The best model as determined by Akaike’s Information Criterion (AIC) was nest visual obstruction as a predictor of nest use. AIC = 331.77
@@ -167,8 +167,19 @@ ggplot(mopl_clean,
                      breaks = c(0, 1)) + 
   scale_color_manual(values = c("Observed" = "grey67",
                                 "Model" = "blue")) +
-theme(panel.grid = element_blank()) + 
-  theme_minimal()
+  theme_minimal() +
+theme(panel.grid = element_blank())
 ```
 
-h\)
+h\) Figure g: Probability of Mountain Plover nest occupancy decreases as visual obstruction increases. The predicted probability of a nest being occupied (y-axis) is shown as the response of nest visual obstruction (x-axis), in cm, based on a logistic regression model. The dark blue line shows the predicted probability of nest occupancy and the shaded area around it represents the 95% confidence interval. The grey, transparent points at the top and bottom of the graph represent the observed data of nest occupancy. Data citation: Duchardt, Courtney; Beck, Jeffrey; Augustine, David (2020). Data from: Mountain Plover habitat selection and nest survival in relation to weather variability and spatial attributes of Black-tailed Prairie Dog disturbance \[Dataset\]. Dryad. https://doi.org/10.5061/dryad.ttdz08kt7.
+
+i\)
+
+```{r}
+ggpredict(mod_vo, # using visual obstruction model
+          terms = "vo_nest [0]") # visual obstruction = 0
+```
+
+j\. We determined that the best model was visual obstruction as a predictor of nest occupancy. The predicted probability of nest occupancy at zero visual obstruction is 0.73 (95% CI: 0.65, 0.80), and as visual obstruction increases, the predicted probability of nest occupancy decreases. This inverse relationship is consistent with the biological preference of Mountain Plovers, as they tend to select sites with with direct lines of sight to predators. Furthermore, Mountain Plovers blend in well with bare soil when viewed from above by predators, further explaining the preference for low visual obstruction. As for distance to prairie dog colony, it makes sense that visual obstruction is directly correlated to distance, as prairie dogs maintain areas of short vegetation, due to burrowing.
+
+# Problem 4. Affective and Exploratory Visualizations
