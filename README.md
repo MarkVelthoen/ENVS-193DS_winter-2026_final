@@ -16,4 +16,4 @@ There is a code folder with my qmd document and html document, and a data folder
 
 -   `personal_data.csv`: Personal data tracking ocean activity participation and daily workload
 
--   Rendered HTML:
+-   Rendered HTML: <https://markvelthoen.github.io/ENVS-193DS_winter-2026_final/>
