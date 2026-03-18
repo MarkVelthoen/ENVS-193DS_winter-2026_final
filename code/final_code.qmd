@@ -1,5 +1,5 @@
 ---
-title: "final_code"
+title: "ENVS 193DS Final"
 author: "Mark Velthoen"
 format: html
 toc: true
@@ -26,7 +26,11 @@ nest <- read.csv(here("data", "nest_data.csv"))
 
 # Problem 1. **Research Writing**
 
-a\)
+a\) In part 1, they used a simple linear regression. In part 2 they used a Kruskal-Wallis test.
+
+b\) One figure that could be used to accompany the statement is part 2 could be a jitter plot with the interquartile range and median point highlighted for each classification. The x-axis would be split into each water year classification and the y-axis would be the median flooded wetland area in m² for each year. Furthermore, the use of different colors for each classification could help differentiate the data.
+
+c\)
 
 # Problem 2. Data Visualization
 
