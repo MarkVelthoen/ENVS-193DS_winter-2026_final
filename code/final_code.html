@@ -170,11 +170,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code># A tibble: 5 × 3
   site         year mean_fronds
   &lt;fct&gt;       &lt;int&gt;       &lt;dbl&gt;
-1 Naples       2013        9.20
-2 Carpinteria  2025       12.9 
-3 Carpinteria  2013        2.93
-4 Carpinteria  2016        4.97
-5 Carpinteria  2001        4.42</code></pre>
+1 Carpinteria  2023        4.50
+2 Carpinteria  2020        3.56
+3 Carpinteria  2000        7.98
+4 Carpinteria  2006       10.8 
+5 Carpinteria  2025       12.9 </code></pre>
 </div>
 </div>
 <div class="cell">
@@ -189,15 +189,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>b) The value for fronds in this quad and transect is -99999. This value represents an NA, which occurred if (1) data were not collected for a particular species or (2) a datasheet was lost.</p>
 <p>c)</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> kelp_clean,</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> year,</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> mean_fronds,</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> site)) <span class="sc">+</span> </span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Year"</span>,</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Mean kelp fronds per year"</span>,</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Sites vary in mean kelp fronds per year"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> kelp_clean, <span class="co"># using kelp_clean data</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="co"># year as the x-axis</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> mean_fronds, <span class="co"># mean kelp fronds as the y-axis</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> site)) <span class="sc">+</span> <span class="co"># coloring by site</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> <span class="co"># plotting trendline</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="co"># # plotting data points</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Naples"</span> <span class="ot">=</span> <span class="st">"lightpink2"</span>,</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Isla Vista"</span> <span class="ot">=</span> <span class="st">"darkgreen"</span>,</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Carpinteria"</span> <span class="ot">=</span> <span class="st">"lightblue"</span>)) <span class="sc">+</span>  <span class="co"># manually coloring each site</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Year"</span>,</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Mean kelp fronds per year"</span>,</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Sites vary in mean kelp fronds per year"</span>) <span class="sc">+</span> <span class="co"># labeling x and y axis and title</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>), <span class="co"># center title</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.border =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span> <span class="co"># no border</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="co"># making the theme classic</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -206,7 +213,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>d) The site with the most variable mean kelp fronds per year is Isla Vista. We can tell that this is the case because the green line/points have the largest y-axis range. The site with the least variable mean kelp fronds per year is Carpinteria. We can tell that this is the case because the blue line/points has the smallest range on the y-axis, as well as a smaller number of spikes/dips.</p>
+<p>d) The site with the most variable mean kelp fronds per year is Isla Vista. We can tell that this is the case because the green line has the largest y-axis range (5 - 40 fronds). Furthermore, the Isla Vista site has very pronounced peaks and troughs, reinforcing the variability of this site. The site with the least variable mean kelp fronds per year is Carpinteria. We can tell that this is the case because the blue line has the smallest range on the y-axis, as well as a smaller number of peaks and troughs.</p>
 </section>
 <section id="problem-3.-data-analysis" class="level1">
 <h1>Problem 3. Data Analysis</h1>
