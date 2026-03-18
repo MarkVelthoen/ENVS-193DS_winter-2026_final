@@ -100,41 +100,41 @@ a\) The 1s and 0s in this data set correspond to whether or not a nest site is b
 
 b\) Visual obstruction: This is a continuous variable, however, it is separated into three sub-categories, visual obstruction directly at nest, visual obstruction 5 meters from the nest and visual obstruction 10 meters from the nest. Visual obstruction measures the height at which vegetation is sufficiently dense to obscure a 2.5-cm wide pole when viewed from a 1-m height. As visual obstruction increases, the probability of Mountain Plover nest site use would decrease because the species prefers open habitats with direct lines of sight to predators. I found this in the discussion section, page 10 "reduced vegetation height and increased exposure of bare ground have been linked to enhanced Mountain Plover habitat quality."
 
-Distance to prairie dog colony edge: This is a continuous variable. As distance to prairie dog colony edge increases, the probability of Mountain Plover nest site use would decrease because plovers prefer nesting areas closer to colony edges rather than the cores of large colonies. I found this within the discussion section, page 10 "probability of site use declined near cores of large colonies.”
+Distance to prairie dog colony edge: This is a continuous variable quantifies how far each measured nest is from the nearest edge of a prairie dog colony. As distance to colony edge increases, the probability of Mountain Plover nest site use would decrease. This is due to the fact that complementary resources, such as taller vegetation for thermoregulation and predator cover are more accessible. I found this within the discussion section, page 10 "probability of site use declined near cores of large colonies.”
 
 c\.
 
 d\.
 
 ```{r}
-mopl_clean <- nest |>
-  clean_names() |>
-  mutate(used_bin = ifelse(id == "used",1, 0)) |>
-  select(used_bin, edgedist, vo_nest)
+mopl_clean <- nest |> # creating a new object called mopl_clean
+  clean_names() |> # cleaning the names
+  mutate(used_bin = ifelse(id == "used",1, 0)) |> # making a new column that displays 1 if nest is in use and 0 if nest is not in use
+  select(used_bin, edgedist, vo_nest) # selceting only used_bin, edgedist and vo_nest columns
 ```
 
 ```{r}
-mod_null <- glm(used_bin ~ 1,
-                data = mopl_clean,
-                family = binomial)
+mod_null <- glm(used_bin ~ 1, # making new object mod_null, no predictors
+                data = mopl_clean,  # data 
+                family = binomial) # error distribution
 ```
 
 ```{r}
-mod_sat <- glm(used_bin ~ edgedist + vo_nest,
-               data = mopl_clean,
-               family = binomial)
+mod_sat <- glm(used_bin ~ edgedist + vo_nest, # making new object mod_sat, both edgedist and vo as predictors
+               data = mopl_clean, # data
+               family = binomial)  # error distribution
 ```
 
 ```{r}
-mod_edge <- glm(used_bin ~ edgedist,
-                data = mopl_clean,
-                family = binomial)
+mod_edge <- glm(used_bin ~ edgedist, # making new object mod_edge, edgedist as predictor
+                data = mopl_clean, # data
+                family = binomial)  # error distribution
 ```
 
 ```{r}
-mod_vo <- glm(used_bin ~ vo_nest,
-              data = mopl_clean,
-              family = binomial)
+mod_vo <- glm(used_bin ~ vo_nest, # making new object mod_vo, vo as predictor
+              data = mopl_clean, # data
+              family = binomial)  # error distribution
 ```
 
 e\)
@@ -159,33 +159,33 @@ g\)
 
 ```{r}
 mod_preds <- ggpredict(mod_vo,
-                       terms = "vo_nest [all]")
-ggplot(mopl_clean,
-       aes(x = vo_nest,
-           y = used_bin)) + 
-  geom_point(aes(color = "Observed"),
-             size = 3,
+                       terms = "vo_nest [all]") # predicted probabilites
+ggplot(mopl_clean, # using mopl_clean data frame
+       aes(x = vo_nest, # visual obstruction (cm) as the x-axis
+           y = used_bin)) + # nest usage as y-axis
+  geom_point(aes(color = "Observed"), # coloring data points
+             size = 3, # setting the size and transparency 
              alpha = 0.4) + 
-  geom_ribbon(data = mod_preds,
-              aes(x = x,
-                  y = predicted,
+  geom_ribbon(data = mod_preds, # using mod_preds for ribbon data
+              aes(x = x, # keeping the same x-axis
+                  y = predicted, 
                   ymin = conf.low,
                   ymax = conf.high),
-              fill = "lightblue",
+              fill = "lightblue", # coloring it light blue and setting transparaency
               alpha = 0.4) + 
-  geom_line(data = mod_preds,
-            aes(x = x,
+  geom_line(data = mod_preds, # using mod_preds data for line
+            aes(x = x, # keeping the same x-axis
                 y = predicted,
-                color = "Model"),
+                color = "Model"), # coloring the line and setting width
             linewidth = 1) +
-  labs(x = "Nest visual obstruction (cm)",  
+  labs(x = "Nest visual obstruction (cm)",  # labeling the x and y axis
   y = "Probability of nest occupancy") +
-  scale_y_continuous(limits = c(0, 1),
+  scale_y_continuous(limits = c(0, 1), # setting y-axis scale
                      breaks = c(0, 1)) + 
-  scale_color_manual(values = c("Observed" = "grey67",
+  scale_color_manual(values = c("Observed" = "grey67", # manually coiloring the line and data points
                                 "Model" = "blue")) +
-  theme_minimal() +
-theme(panel.grid = element_blank())
+  theme_minimal() + # setting the theme
+theme(panel.grid = element_blank()) # removing gridlines
 ```
 
 h\) Figure g: Probability of Mountain Plover nest occupancy decreases as visual obstruction increases. The predicted probability of a nest being occupied (y-axis) is shown as the response of nest visual obstruction (x-axis), in cm, based on a logistic regression model. The dark blue line shows the predicted probability of nest occupancy and the shaded area around it represents the 95% confidence interval. The grey, transparent points at the top and bottom of the graph represent the observed data of nest occupancy. Data citation: Duchardt, Courtney; Beck, Jeffrey; Augustine, David (2020). Data from: Mountain Plover habitat selection and nest survival in relation to weather variability and spatial attributes of Black-tailed Prairie Dog disturbance \[Dataset\]. Dryad. https://doi.org/10.5061/dryad.ttdz08kt7.
